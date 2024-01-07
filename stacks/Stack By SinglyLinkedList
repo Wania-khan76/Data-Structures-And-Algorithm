@@ -1,0 +1,162 @@
+class ListNode:
+    def __init__(self,data):
+        self.data=data
+        self.next=None
+
+    def traverse(self):
+        a=self
+        print("Traversing the list...")
+        while a is not None:
+            print(a.data,end=" ")
+
+            a=a.next
+
+    def __len__(self):
+        a = self
+        i=0
+        while a is not None:
+            i+=1
+            a = a.next
+        return i
+
+    def insert(self, value):
+
+        n = ListNode(value)
+        n.next=self.next
+        self.next=n
+
+    def insertend(self, value):
+
+                n = ListNode(value)
+                a = self
+                while a.next is not None:
+                    a = a.next
+                a.next = n
+
+    def delete(self):
+        item=None
+        if self.next is not None:
+            tmp=self.next
+            item=tmp.data
+            self.next=tmp.next
+        return item
+
+    def search(self,target):
+        a=self
+        if a.data==target:
+            return [True, None, a]
+        b=a.next
+        while b is not None and b.data!=target:
+            a=a.next
+            b=b.next
+        return [b is not None, a, b]
+
+    def circularize(self):
+        a=self
+        while a.next is not None:
+            a=a.next
+        a.next=self
+
+    def traverse_circular(self):
+        a = self
+        print("Traversing the list...")
+        while a.next is not self:
+            print(a.data, end=" ")
+            a = a.next
+        print(a.data, end=" ")
+        print()
+
+    def linearize(self):
+        a = self
+        while a.next is not self:
+            a = a.next
+        a.next = None
+
+    def insafter(head,x,val):
+        res=head.search(x)
+        if res[0]==True:
+            res[2].insert(val)
+
+    def insbefore(head,x,val):
+        res=head.search(x)
+        if res[0]==True:
+            if res[2] is head:
+                new=ListNode(x)
+                new.next=head
+                head=new
+            else:
+                res[1].insert(val)
+
+        return head
+    
+    def delnode(head,x):
+        res=head.search(x)
+        if res[0]==True:
+            if res[2] is head:
+                head=head.next
+            else:
+                res[1].delete()
+        return head
+    
+    def buildlist(val):
+        assert len(val)>0
+        a=ListNode(val[0])
+        b=a
+        for i in range(1,len(val),1):
+            b.insert(val[i])
+            b=b.next
+        return a
+    
+    def instail(h,x):
+        if h is None:
+            return ListNode(x)
+        a=h
+        while a.next is not None:
+            a=a.next
+        new =ListNode(x)
+        a.next=new
+        return h
+    
+
+    def count_x(head, x):
+        count = 0
+        current = head
+
+        while current is not None:
+            if current.data == x:
+                count += 1
+            current = current.next
+
+        return count
+
+class mystack:
+
+    def __init__(self):
+        self.top = None
+
+    def isEmpty(self):
+        return self.top is None
+
+    def pop(self):
+        assert not self.isEmpty(),"Empty stack"
+        x = self.top.data
+        self.top = self.top.next
+        return x
+
+    def push(self,val):
+        x = ListNode(val)
+        x.next = self.top
+        self.top = x
+        return val
+
+
+sl=mystack()
+print(sl.isEmpty())
+mynum=[5,8,4,3,7]
+for i in range(len(mynum)):
+    print(sl.push(mynum[i]))
+
+print(sl.isEmpty())
+while not sl.isEmpty():
+  print(sl.pop())
+print(sl.isEmpty())
