@@ -1,0 +1,11 @@
+def toh(num,first,middle,last):
+    assert num > 0
+    if num == 1:
+        print("Move disk from", first, "to", last)
+        return
+    toh(num-1,first,last,middle)
+    toh(1,first,middle,last)
+    toh(num-1,middle,first,last)
+
+
+tower=toh(4,"A","B","C")
